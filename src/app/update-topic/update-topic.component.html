@@ -1,0 +1,20 @@
+<h3>Update topic</h3>
+<span>{{ errorMessage }}</span>
+
+<div class="updateTopic">
+    <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input matInput type="text" [(ngModel)]="currentTopic.title">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Days for learning</mat-label>
+        <input matInput type="number" [(ngModel)]="currentTopic.daysForLearning">
+    </mat-form-field>
+    <br>
+    <button mat-flat-button color="primary" (click)="update()">
+        Update
+    </button>
+</div>
+
+<a style="margin-left: 17px;" mat-flat-button href="/topics">All topics</a>

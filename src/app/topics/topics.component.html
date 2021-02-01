@@ -1,0 +1,69 @@
+<h2>All your topics:</h2>
+
+<table mat-table [dataSource]="topics" class="mat-elevation-z8" style="width: 75%;">
+    <ng-containter matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>Title</th>
+        <td mat-cell *matCellDef="let topic">
+            <a mat-flat-button color="primary" href="/subtopics/topic/{{topic.id}}">{{ topic.title }}</a></td>
+    </ng-containter>
+
+    <ng-containter matColumnDef="days for learning">
+        <th mat-header-cell *matHeaderCellDef>Days for learning</th>
+        <td mat-cell *matCellDef="let topic">{{ topic.daysForLearning }}</td>
+    </ng-containter>
+
+    <ng-containter matColumnDef="progress">
+        <th mat-header-cell *matHeaderCellDef>Progress</th>
+        <td mat-cell *matCellDef="let topic">
+            <span *ngIf="topic.completed">Topic is completed</span>
+            <span *ngIf="!topic.completed">Topic in progress</span>
+        </td>
+    </ng-containter>
+
+    <ng-containter matColumnDef="started on">
+        <th mat-header-cell *matHeaderCellDef>Started on</th>
+        <td mat-cell *matCellDef="let topic">
+            <button *ngIf="!topic.startedOn" mat-flat-button color="primary" (click)="start(topic)">
+                Start
+            </button>
+            <span *ngIf="topic.startedOn">{{ topic.startedOn }}</span>
+        </td>
+    </ng-containter>
+
+    <ng-containter matColumnDef="update">
+        <th mat-header-cell *matHeaderCellDef>Update</th>
+        <td mat-cell *matCellDef="let topic">
+            <a mat-flat-button href="/topics/{{topic.id}}">Update</a>
+        </td>
+    </ng-containter>
+
+    <ng-containter matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef>Delete</th>
+        <td mat-cell *matCellDef="let topic">
+            <button mat-flat-button color="warn" (click)="delete(topic.id)">
+                Delete
+            </button>
+        </td>
+    </ng-containter>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<h2>Add new topic</h2>
+<div class="add-topic">
+    <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input matInput type="text" #title>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Days for learning</mat-label>
+        <input matInput type="text" #daysForLearning>
+    </mat-form-field>
+    <br>
+    <button mat-flat-button color="primary" (click)="add(title.value, daysForLearning.value); 
+        title.value = ''; daysForLearning.value = ''">
+        Add
+    </button>
+</div>
