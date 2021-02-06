@@ -20,16 +20,16 @@ export class TokenStorageService {
 
   public saveToken(token: string) {
     window.sessionStorage.removeItem('TOKEN_KEY');
-    window.sessionStorage.getItem('TOKEN_KEY');
+    window.sessionStorage.setItem('TOKEN_KEY', token);
   }
 
   public getUser(): any {
     return JSON.parse(sessionStorage.getItem('UESR_KEY'));
   }
 
-  public saveUser(user): void {
+  public saveUser(username: string): void {
     window.sessionStorage.removeItem('USER_KEY');
-    window.sessionStorage.setItem('USER_KEY', JSON.stringify(user));
+    window.sessionStorage.setItem('USER_KEY', username);
   }
 
 }

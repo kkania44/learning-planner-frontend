@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -16,8 +16,8 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      username: new FormControl(''),
-      password: new FormControl('')
+      username: new FormControl('', [ Validators.required, Validators.minLength(3) ]),
+      password: new FormControl('', [ Validators.required, Validators.minLength(3) ])
     })
   };
 
@@ -32,6 +32,10 @@ export class RegisterComponent implements OnInit {
         this.isSuccessful = false;
       }
     );
+  }
+
+  hasErrors(controlName: string, errorName: string) {
+    return this.form.controls[controlName].hasError(errorName);
   }
 
 }

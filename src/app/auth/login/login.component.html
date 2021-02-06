@@ -1,1 +1,27 @@
-<p>login works!</p>
+<div class="card card-containter">
+    <form [formGroup]="form" #logForm="ngForm" (ngSubmit)="login()">
+        <h3>Sign in</h3>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Username</mat-label>
+            <input type="text" matInput formControlName="username">
+            <mat-error *ngIf="hasErrors('username', 'required')">Username is required</mat-error>
+            <mat-error *ngIf="hasErrors('username', 'minlength')">Username has to be at least 3 characters
+            </mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input type="password" matInput formControlName="password">
+            <mat-error *ngIf="hasErrors('password', 'required')">Password is required</mat-error>
+            <mat-error *ngIf="hasErrors('password', 'minlength')">Password has to be at least 5 characters
+            </mat-error>
+        </mat-form-field>
+        <br>
+        <button class="submit" type="submit" mat-flat-button color="primary" [disabled]="!form.valid">Sign in</button>
+
+        <div class="loginFailed" *ngIf="logForm.submitted && loginFailed">
+            Login failed: {{ errorMessage }}
+        </div>
+    </form>
+</div>

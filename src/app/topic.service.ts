@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { TokenStorageService } from './auth/token-storage.service';
 import { Topic } from './topic';
 
 @Injectable({
@@ -9,10 +10,18 @@ import { Topic } from './topic';
 export class TopicService {
   private url = 'http://localhost:8080/topics';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private tokenStorage: TokenStorageService) { }
 
   getAllTopics(userId: number): Observable<Topic[]> {
-    return this.http.get<Topic[]>(`${this.url}/user/${userId}`);
+    let httpOptions = this.setAuthHeader();
+    console.log(httpOptions);
+    return this.http.get<Topic[]>(`${this.url}/user/${userId}`, httpOptions);
+  }
+
+  private setAuthHeader() {
+    let token = this.tokenStorage.getToken();
+    let httpOptions = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token}` }) };
+    return httpOptions;
   }
 
   getOneById(topicId: number): Observable<Topic> {

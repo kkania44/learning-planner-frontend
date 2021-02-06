@@ -1,0 +1,9 @@
+.submit {
+    margin-left: 20px;
+}
+.loginFailed {
+    color: red;
+}
+* {
+    margin-left: 15px;
+}
