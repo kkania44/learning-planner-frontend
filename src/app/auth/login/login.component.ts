@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { TokenStorageService } from '../token-storage.service';
 
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private tokenStorage: TokenStorageService) { }
+    private tokenStorage: TokenStorageService,
+    private router: Router) { }
 
   ngOnInit(): void {
     if (this.tokenStorage.getToken()) {
@@ -36,10 +38,10 @@ export class LoginComponent implements OnInit {
         this.tokenStorage.saveUser(data.username);
         this.isLoggedIn = true;
         this.loginFailed = false;
-        this.reloadPage();
+        this.router.navigateByUrl('/topics');
       }, 
       err => {
-        this.errorMessage = err.error.message;
+        this.errorMessage = 'Bad credentials'
         this.loginFailed = true;
       }
     )

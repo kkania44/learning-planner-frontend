@@ -2,6 +2,10 @@
     <form [formGroup]="form" #logForm="ngForm" (ngSubmit)="login()">
         <h3>Sign in</h3>
 
+        <div class="loginFailed" *ngIf="logForm.submitted && loginFailed">
+            Login failed: {{ errorMessage }}
+        </div>
+
         <mat-form-field appearance="outline">
             <mat-label>Username</mat-label>
             <input type="text" matInput formControlName="username">
@@ -20,8 +24,9 @@
         <br>
         <button class="submit" type="submit" mat-flat-button color="primary" [disabled]="!form.valid">Sign in</button>
 
-        <div class="loginFailed" *ngIf="logForm.submitted && loginFailed">
-            Login failed: {{ errorMessage }}
+        <div class="toRegistration">
+            Don't have account yet?
+            <a href="/auth/signup">Sign up!</a>
         </div>
     </form>
 </div>
