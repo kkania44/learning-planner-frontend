@@ -16,6 +16,7 @@ import { UpdateTopicComponent } from './update-topic/update-topic.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
+import { authInterceptorProvider } from './auth/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { RegisterComponent } from './auth/register/register.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [authInterceptorProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

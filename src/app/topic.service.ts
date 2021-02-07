@@ -13,15 +13,7 @@ export class TopicService {
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService) { }
 
   getAllTopics(userId: number): Observable<Topic[]> {
-    let httpOptions = this.setAuthHeader();
-    console.log(httpOptions);
-    return this.http.get<Topic[]>(`${this.url}/user/${userId}`, httpOptions);
-  }
-
-  private setAuthHeader() {
-    let token = this.tokenStorage.getToken();
-    let httpOptions = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token}` }) };
-    return httpOptions;
+    return this.http.get<Topic[]>(this.url);
   }
 
   getOneById(topicId: number): Observable<Topic> {

@@ -5,16 +5,16 @@ import { TokenStorageService } from "./token-storage.service";
 const TOKEN_HEADER_KEY = 'Authorization';
 
 @Injectable()
-export class AuthInterceptor implements HttpInterceptor{
+export class AuthInterceptor implements HttpInterceptor {
 
-    constructor(private tokenService: TokenStorageService) {}
+    constructor(private tokenService: TokenStorageService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        let authRequest = req;
         const token = this.tokenService.getToken();
-        
+        let authRequest = req;
+
         if (token != null) {
-            authRequest = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) })
+        authRequest = req.clone({ setHeaders: { Authorization: 'Bearer ' + token } });
         }
         return next.handle(authRequest);
     }
