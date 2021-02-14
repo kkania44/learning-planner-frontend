@@ -12,7 +12,7 @@ export class TopicService {
 
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService) { }
 
-  getAllTopics(userId: number): Observable<Topic[]> {
+  getAllTopics(): Observable<Topic[]> {
     return this.http.get<Topic[]>(this.url);
   }
 
@@ -20,8 +20,8 @@ export class TopicService {
     return this.http.get<Topic>(`${this.url}/${topicId}`)
   }
 
-  add(newTopic: Topic, userId: number): Observable<Topic> {
-    return this.http.post<Topic>(`${this.url}/user/${userId}`, newTopic, this.httpOptions);
+  add(newTopic: Topic): Observable<Topic> {
+    return this.http.post<Topic>(this.url, newTopic, this.httpOptions);
   }
 
   start(topicId: number): Observable<Topic> {
