@@ -2,35 +2,43 @@ import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { MatTable } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { TokenStorageService } from '../auth/token-storage.service';
 import { Topic } from '../topic';
 import { TopicService } from '../topic.service';
 
-const tempUserId = 1;
 
 @Component({
   selector: 'app-topics',
   templateUrl: './topics.component.html',
   styleUrls: ['./topics.component.css'],
-  providers: [DatePipe] 
+  providers: [DatePipe]
 })
 export class TopicsComponent implements OnInit {
   @Input() color: ThemePalette;
   topics: Topic[];
   displayedColumns = ['title', 'days for learning', 'progress', 'started on', 'update', 'delete'];
+  isLoggedIn: boolean;
 
   @ViewChild(MatTable) table: MatTable<Topic>;
 
   constructor(
     private topicService: TopicService,
-    private datepipe: DatePipe) 
-    { }
+    private datepipe: DatePipe,
+    private tokenStorage: TokenStorageService,
+    private router: Router) { }
 
   ngOnInit(): void {
-    this.getAllTopics();
+    this.isLoggedIn = !!this.tokenStorage.getToken();
+    if (this.isLoggedIn) {
+      this.getAllTopics();
+    } else {
+      this.router.navigateByUrl('/auth/login');
+    }
   }
 
   getAllTopics() {
-    this.topicService.getAllTopics(tempUserId)
+    this.topicService.getAllTopics()
       .subscribe(topics => this.topics = topics);
   }
 
@@ -40,7 +48,7 @@ export class TopicsComponent implements OnInit {
       return;
     }
     let topic = new Topic(title, daysForLearning);
-    this.topicService.add(topic, tempUserId)
+    this.topicService.add(topic)
       .subscribe(topic => {
         this.topics.push(topic);
         this.table.renderRows();
@@ -57,7 +65,7 @@ export class TopicsComponent implements OnInit {
     this.topicService.delete(topicId).subscribe(() => {
       this.getAllTopics();
       this.table.renderRows();
-  }); 
-}
+    });
+  }
 
 }

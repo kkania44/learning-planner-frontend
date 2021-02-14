@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subtopic } from '../subtopic';
 import { SubtopicService } from "../subtopic.service";
 import { Location } from '@angular/common';
+import { TokenStorageService } from '../auth/token-storage.service';
 
 @Component({
   selector: 'app-subtopics',
@@ -12,14 +13,22 @@ import { Location } from '@angular/common';
 export class SubtopicsComponent implements OnInit {
   subtopics: Subtopic[];
   errorMessage: string;
+  isLoggedIn: boolean;
 
   constructor(
     private subtopicService: SubtopicService,
     private route: ActivatedRoute,
-    private location: Location) { }
+    private location: Location,
+    private tokenStorage: TokenStorageService,
+    private router: Router) { }
 
   ngOnInit(): void {
-    this.getSubtopicsForTopic(this.getIdFromUrl());
+    this.isLoggedIn = !!this.tokenStorage.getToken();
+    if (this.isLoggedIn) {
+      this.getSubtopicsForTopic(this.getIdFromUrl());
+    } else {
+        this.router.navigateByUrl('/auth/login');
+    }
   }
 
   getSubtopicsForTopic(topicId: number): void {
