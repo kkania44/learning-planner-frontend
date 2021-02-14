@@ -1,3 +1,4 @@
+import { state } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -14,11 +15,14 @@ export class LoginComponent implements OnInit {
   isLoggedIn = false;
   loginFailed = false;
   errorMessage = '';
+  signupSuccessMsg: string;
 
   constructor(
     private authService: AuthService,
     private tokenStorage: TokenStorageService,
-    private router: Router) { }
+    private router: Router) { 
+      this.signupSuccessMsg = this.getExtraNavMessage();
+    }
 
   ngOnInit(): void {
     if (this.tokenStorage.getToken()) {
@@ -53,6 +57,16 @@ export class LoginComponent implements OnInit {
 
   reloadPage() {
     window.location.reload();
+  }
+
+  private getExtraNavMessage(): string {
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation.extras.state;
+    if (state) {
+    return state.successMsg; 
+    } else {
+      return;
+    }
   }
 
 }

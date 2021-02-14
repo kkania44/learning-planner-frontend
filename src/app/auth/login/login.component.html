@@ -1,4 +1,9 @@
 <div class="card card-containter">
+
+    <div class="signupMsg" *ngIf="signupSuccessMsg">
+        {{ signupSuccessMsg }}
+    </div>
+
     <form [formGroup]="form" #logForm="ngForm" (ngSubmit)="login()">
         <h3>Sign in</h3>
 

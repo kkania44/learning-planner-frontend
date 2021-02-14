@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NavigationExtras, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -12,17 +13,20 @@ export class RegisterComponent implements OnInit {
   isSuccessful = false;
   errorMessage = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      username: new FormControl('', [ Validators.required, Validators.minLength(3) ]),
-      password: new FormControl('', [ Validators.required, Validators.minLength(3) ])
+      username: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      password: new FormControl('', [Validators.required, Validators.minLength(3)])
     })
   };
 
   register() {
-    this.authService.register(this.form).subscribe(
+    const navigationExtras: NavigationExtras = {state: {successMsg: 'Registration successful!'}};
+    this.authService.register(this.form.value).subscribe(
       data => {
         console.log(data);
         this.isSuccessful = true
@@ -32,6 +36,7 @@ export class RegisterComponent implements OnInit {
         this.isSuccessful = false;
       }
     );
+    this.router.navigate(['/auth/login'], navigationExtras);
   }
 
   hasErrors(controlName: string, errorName: string) {

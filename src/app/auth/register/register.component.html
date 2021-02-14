@@ -18,16 +18,18 @@
             </mat-error>
         </mat-form-field>
         <br>
-        <button class="submit" type="submit" mat-flat-button color="primary" [disabled]="!form.valid">Sign
-            up</button>
-
-        <div class="success" *ngIf="regForm.submitted && isSuccessful">
-            Registration successful!
-        </div>
-
-        <div class="toLogin">
-            If you already have account 
-            <a href="/auth/login">Sign in!</a>
-        </div>
+        <button class="submit" type="submit" mat-flat-button color="primary" 
+            [disabled]="!form.valid">
+            Sign up
+        </button>
     </form>
+    
+    <div class="success" *ngIf="isSuccessful">
+        Registration successful!
+    </div>
+
+    <div class="toLogin">
+        If you already have account 
+        <a href="/auth/login">Sign in!</a>
+    </div>
 </div>
