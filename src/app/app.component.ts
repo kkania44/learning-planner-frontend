@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TokenStorageService } from './auth/token-storage.service';
 
@@ -7,7 +7,7 @@ import { TokenStorageService } from './auth/token-storage.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, OnDestroy{
   title = 'Planner for your exam learing path';
   isLoggedIn = false;
 
@@ -21,9 +21,14 @@ export class AppComponent implements OnInit{
   }
 
   logout() {
-    this.tokenStorage.signOut();
     this.router.navigateByUrl('/auth/login');
     this.isLoggedIn = false;
     window.location.reload();
+    this.tokenStorage.clear();
   }
+
+  ngOnDestroy(): void {
+    this.tokenStorage.clear();
+  }
+  
 }

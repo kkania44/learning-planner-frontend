@@ -10,7 +10,7 @@ export class TokenStorageService {
 
   constructor() { }
 
-  signOut(): void {
+  clear(): void {
     window.sessionStorage.clear();
   }
 
@@ -30,10 +30,6 @@ export class TokenStorageService {
   public saveUser(username: string): void {
     window.sessionStorage.removeItem('USER_KEY');
     window.sessionStorage.setItem('USER_KEY', username);
-  }
-
-  public deleteToken(): void {
-    window.sessionStorage.clear();
   }
 
 }
