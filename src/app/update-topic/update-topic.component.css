@@ -1,7 +1,9 @@
 * {
     margin-left: 25px;
 }
-
 .updateTopic {
     margin-left: 25px;
+}
+.message {
+    color: green;
 }

@@ -14,18 +14,19 @@ import { TopicService } from '../topic.service';
 export class UpdateTopicComponent implements OnInit {
   @Input() color: ThemePalette;
   currentTopic: Topic;
-  errorMessage: string;
+  message: string;
 
   constructor(
     private topicService: TopicService,
-    private route: ActivatedRoute,
-    private router: Router) { }
+    private route: ActivatedRoute) 
+    { }
 
   ngOnInit(): void {
     this.getTopicById(this.getIdFromUrl());
   }
 
   update(): void {
+    this.message = "Topic updated";
     this.topicService.update(this.currentTopic).subscribe();
   }
 
@@ -40,7 +41,7 @@ export class UpdateTopicComponent implements OnInit {
   getTopicById(topicId: number) {
     return this.topicService.getOneById(topicId)
       .subscribe(topic => this.currentTopic = topic,
-        error => this.errorMessage = error);
+        error => this.message = error);
   }
 
 }

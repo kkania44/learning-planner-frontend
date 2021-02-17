@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl('/topics');
       }, 
       err => {
-        this.errorMessage = 'Bad credentials'
+        this.errorMessage = err.error.message;
         this.loginFailed = true;
       }
     )
