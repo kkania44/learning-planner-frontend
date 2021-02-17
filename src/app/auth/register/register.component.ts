@@ -25,18 +25,19 @@ export class RegisterComponent implements OnInit {
   };
 
   register() {
-    const navigationExtras: NavigationExtras = {state: {successMsg: 'Registration successful!'}};
+    let navigationExtras: NavigationExtras;
     this.authService.register(this.form.value).subscribe(
       data => {
         console.log(data);
-        this.isSuccessful = true
+        this.isSuccessful = true;
+        navigationExtras = { state: { successMsg: 'Registration successful!' }};
+        this.router.navigate(['/auth/login'], navigationExtras);
       },
       err => {
         this.errorMessage = err.error.message;
         this.isSuccessful = false;
       }
     );
-    this.router.navigate(['/auth/login'], navigationExtras);
   }
 
   hasErrors(controlName: string, errorName: string) {

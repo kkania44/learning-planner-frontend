@@ -2,6 +2,11 @@
     <form [formGroup]="form" #regForm="ngForm" (ngSubmit)="register()">
         <h3>Sign up</h3>
 
+        <div class="failed" *ngIf="!isSuccessful && regForm.submitted">
+            Registration failed: {{ errorMessage }}
+            <br>
+        </div>
+
         <mat-form-field appearance="outline">
             <mat-label>Username</mat-label>
             <input type="text" matInput formControlName="username">
@@ -23,10 +28,6 @@
             Sign up
         </button>
     </form>
-    
-    <div class="success" *ngIf="isSuccessful">
-        Registration successful!
-    </div>
 
     <div class="toLogin">
         If you already have account 
