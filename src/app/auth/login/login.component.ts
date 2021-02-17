@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
+      this.router.navigateByUrl('/topics');
     } else {
       this.form = new FormGroup({
         username: new FormControl('', [ Validators.required, Validators.minLength(3) ]),

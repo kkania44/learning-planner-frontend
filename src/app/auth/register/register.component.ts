@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { TokenStorageService } from '../token-storage.service';
 
 @Component({
   selector: 'app-register',
@@ -15,9 +16,14 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private router: Router) { }
+    private router: Router,
+    private tokenService: TokenStorageService)
+     { }
 
   ngOnInit(): void {
+    if (this.tokenService.getToken()) {
+      this.router.navigateByUrl('/topics');
+    }
     this.form = new FormGroup({
       username: new FormControl('', [Validators.required, Validators.minLength(3)]),
       password: new FormControl('', [Validators.required, Validators.minLength(3)])
