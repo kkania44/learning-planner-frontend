@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TokenStorageService } from './auth/token-storage.service';
+import { TokenStorageService } from '../auth/token-storage.service';
 import { Topic } from './topic';
 
 @Injectable({
