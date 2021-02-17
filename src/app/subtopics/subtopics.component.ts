@@ -3,7 +3,6 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subtopic } from '../subtopic';
 import { SubtopicService } from "../subtopic.service";
 import { Location } from '@angular/common';
-import { TokenStorageService } from '../auth/token-storage.service';
 
 @Component({
   selector: 'app-subtopics',
@@ -18,17 +17,10 @@ export class SubtopicsComponent implements OnInit {
   constructor(
     private subtopicService: SubtopicService,
     private route: ActivatedRoute,
-    private location: Location,
-    private tokenStorage: TokenStorageService,
-    private router: Router) { }
+    private location: Location) { }
 
   ngOnInit(): void {
-    this.isLoggedIn = !!this.tokenStorage.getToken();
-    if (this.isLoggedIn) {
-      this.getSubtopicsForTopic(this.getIdFromUrl());
-    } else {
-        this.router.navigateByUrl('/auth/login');
-    }
+    this.getSubtopicsForTopic(this.getIdFromUrl());
   }
 
   getSubtopicsForTopic(topicId: number): void {

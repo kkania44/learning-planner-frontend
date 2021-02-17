@@ -2,8 +2,6 @@ import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { MatTable } from '@angular/material/table';
-import { Router } from '@angular/router';
-import { TokenStorageService } from '../auth/token-storage.service';
 import { Topic } from '../topic';
 import { TopicService } from '../topic.service';
 
@@ -24,17 +22,11 @@ export class TopicsComponent implements OnInit {
 
   constructor(
     private topicService: TopicService,
-    private datepipe: DatePipe,
-    private tokenStorage: TokenStorageService,
-    private router: Router) { }
+    private datepipe: DatePipe) 
+    { }
 
   ngOnInit(): void {
-    this.isLoggedIn = !!this.tokenStorage.getToken();
-    if (this.isLoggedIn) {
       this.getAllTopics();
-    } else {
-      this.router.navigateByUrl('/auth/login');
-    }
   }
 
   getAllTopics() {

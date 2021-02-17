@@ -32,4 +32,8 @@ export class TokenStorageService {
     window.sessionStorage.setItem('USER_KEY', username);
   }
 
+  public deleteToken(): void {
+    window.sessionStorage.clear();
+  }
+
 }
