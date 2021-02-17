@@ -2,8 +2,10 @@ import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { MatTable } from '@angular/material/table';
-import { Topic } from '../topic';
-import { TopicService } from '../topic.service';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { Topic } from './topic';
+import { TopicService } from './topic.service';
 
 
 @Component({
@@ -22,16 +24,22 @@ export class TopicsComponent implements OnInit {
 
   constructor(
     private topicService: TopicService,
-    private datepipe: DatePipe) 
-    { }
+    private datepipe: DatePipe,
+    private router: Router,
+    private cookieService: CookieService) { }
 
   ngOnInit(): void {
-      this.getAllTopics();
+    this.getAllTopics();
   }
 
   getAllTopics() {
     this.topicService.getAllTopics()
       .subscribe(topics => this.topics = topics);
+  }
+
+  goToDetails(topic: Topic) {
+    this.cookieService.set('topicTitle', topic.title);
+    this.router.navigateByUrl(`/subtopics/topic/${topic.id}`);
   }
 
   add(title: string, daysForLearning: number): void {

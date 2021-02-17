@@ -17,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { authInterceptorProvider } from './auth/auth-interceptor';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ import { authInterceptorProvider } from './auth/auth-interceptor';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [authInterceptorProvider],
+  providers: [authInterceptorProvider, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

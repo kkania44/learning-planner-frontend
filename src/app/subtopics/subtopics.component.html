@@ -1,18 +1,19 @@
-<h3>Subtopics for choosen topic:</h3>
-<span>{{ errorMessage }}</span>
+<h3>Subtopics in topic '{{ topicTitle }}':</h3>
+{{ errorMessage }}
 
 <div class="subtopics">
     <mat-list>
         <mat-list-item *ngFor="let subtopic of subtopics">
             {{ subtopic.title }}
-            <button mat-flat-button color="accent" *ngIf="!subtopic.completed" (click)="complete(subtopic)">
-                Complete
-            </button>
-            <span *ngIf="subtopic.completed" style="color: green;">(completed)</span>
+            <div class="completion">
+                <button mat-flat-button color="accent" *ngIf="!subtopic.completed" (click)="complete(subtopic)">
+                    Complete
+                </button>
+                <span *ngIf="subtopic.completed" style="color: green;">(completed)</span>
+            </div>
         </mat-list-item>
     </mat-list>
 </div>
-
 
 <h3>Add new subtopic</h3>
 

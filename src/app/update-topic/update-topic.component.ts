@@ -1,10 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { error } from 'protractor';
-import { Topic } from '../topic';
-import { TopicService } from '../topic.service';
+import { Topic } from '../topics/topic';
+import { TopicService } from '../topics/topic.service';
 
 @Component({
   selector: 'app-update-topic',
