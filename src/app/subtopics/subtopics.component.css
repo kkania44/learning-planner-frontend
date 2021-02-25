@@ -10,5 +10,8 @@ button {
     margin-left: 0px;
 }
 .completion {
-    padding-left: 20px;
+    color: green;
 }
+/* .data-table {
+    width: 75%;
+} */

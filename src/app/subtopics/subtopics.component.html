@@ -1,7 +1,38 @@
 <h3>Subtopics in topic '{{ topicTitle }}':</h3>
 {{ errorMessage }}
 
-<div class="subtopics">
+<table mat-table [dataSource]="subtopics" class="mat-elevation-z8" style="width: 50%;">
+    <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>Title</th>
+        <td mat-cell *matCellDef="let subtopic">
+            {{ subtopic.title }}
+        </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="completion">
+        <th mat-header-cell *matHeaderCellDef>Completion</th>
+        <td mat-cell *matCellDef="let subtopic">
+            <button mat-flat-button *ngIf="!subtopic.completed" color="accent" (click)="complete(subtopic)">
+                Complete</button>
+            <span *ngIf="subtopic.completed" class="completion">
+                Completed</span>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef>Delete</th>
+        <td mat-cell *matCellDef="let subtopic">
+            <button mat-flat-button color="warn" (click)="delete(subtopic.id)">
+                Delete
+            </button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<!-- <div class="subtopics">
     <mat-list>
         <mat-list-item *ngFor="let subtopic of subtopics">
             {{ subtopic.title }}
@@ -13,7 +44,7 @@
             </div>
         </mat-list-item>
     </mat-list>
-</div>
+</div> -->
 
 <h3>Add new subtopic</h3>
 

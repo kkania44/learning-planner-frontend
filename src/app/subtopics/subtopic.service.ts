@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Subtopic } from './subtopic';
 import { Observable, pipe, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { url } from 'inspector';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,10 @@ export class SubtopicService {
 
   markAsCompleted(subtopic: Subtopic): Observable<Subtopic> {
     return this.http.put<Subtopic>(this.url, subtopic , this.httpOptions);
+  }
+
+  delete(id: number) {
+    return this.http.delete(`${this.url}/${id}`);
   }
 
   handleError(error: HttpErrorResponse) {

@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subtopic } from './subtopic';
 import { SubtopicService } from "./subtopic.service";
 import { Location } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
+import { ThemePalette } from '@angular/material/core';
+import { MatTable } from '@angular/material/table';
 
 @Component({
   selector: 'app-subtopics',
@@ -12,10 +14,15 @@ import { CookieService } from 'ngx-cookie-service';
 })
 
 export class SubtopicsComponent implements OnInit {
+  @Input() color: ThemePalette;
+  displayedColumns = ['title', 'completion', 'delete'];
   subtopics: Subtopic[];
+  
   errorMessage: string;
   isLoggedIn: boolean;
   topicTitle: string;
+
+  @ViewChild(MatTable) table: MatTable<Subtopic>; 
 
   constructor(
     private subtopicService: SubtopicService,
@@ -41,13 +48,42 @@ export class SubtopicsComponent implements OnInit {
       return;
     }
     this.subtopicService.add(title, this.getIdFromUrl())
-      .subscribe(sub => this.subtopics.push(sub));
+      .subscribe(sub => {
+        this.subtopics.push(sub);
+        this.table.renderRows()
+      });
   }
 
+  delete(id: number) {
+    this.subtopicService.delete(id)
+    .subscribe(() => {
+      this.getSubtopicsForTopic(this.getIdFromUrl());
+      // window.location.reload();
+      // this.table.renderRows()
+    });
+  }
+
+  /* TODO: after completing subtopic check if all are completed, 
+          if so, set topic as completed 
+  */
   complete(subtopic: Subtopic): void {
     subtopic.completed = true;
     this.subtopicService.markAsCompleted(subtopic)
       .subscribe();
+      this.checkIfAllSubtopicsCompleted();
+  }
+
+  goBack(): void {
+    this.location.back();
+  }
+
+  private checkIfAllSubtopicsCompleted(): boolean {
+    this.subtopics.forEach(function(val) {
+      if (!val.completed) {
+        return false;
+      }
+    });
+    return true;
   }
 
   private getIdFromUrl(): number {
@@ -56,10 +92,6 @@ export class SubtopicsComponent implements OnInit {
       id = +params['id']
     });
     return id;
-  }
-
-  goBack(): void {
-    this.location.back();
   }
 
 }
