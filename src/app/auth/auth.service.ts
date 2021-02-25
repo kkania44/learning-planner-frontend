@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  url = 'http://localhost:8080/auth/';
+  url = 'http://localhost:8080/auth';
   httpOptions = { 
     headers: new HttpHeaders({ 'Content-Type': 'application/json'})
   };
@@ -16,14 +16,14 @@ export class AuthService {
   login(credentials): Observable<any> {
     console.log(credentials.username);
     console.log(credentials.password);
-    return this.http.post(`${this.url}signin`, {
+    return this.http.post(`${this.url}/signin`, {
       username: credentials.username,
       password: credentials.password
     }, this.httpOptions);
   }
 
   register(credentials): Observable<any> {
-    return this.http.post(`${this.url}signup`, {
+    return this.http.post(`${this.url}/signup`, {
       username: credentials.username,
       password: credentials.password
     }, this.httpOptions);

@@ -19,6 +19,7 @@ export class TopicsComponent implements OnInit {
   topics: Topic[];
   displayedColumns = ['title', 'days for learning', 'progress', 'started on', 'update', 'delete'];
   isLoggedIn: boolean;
+  errorMsg: string;
 
   @ViewChild(MatTable) table: MatTable<Topic>;
 
@@ -52,7 +53,12 @@ export class TopicsComponent implements OnInit {
       .subscribe(topic => {
         this.topics.push(topic);
         this.table.renderRows();
-      });
+      },
+      error => {
+        if (error.status === 400) {
+        this.errorMsg = '\'daysForLearning\' field has to be a number';
+        }}
+      );
   }
 
   start(topic: Topic): void {
@@ -66,6 +72,10 @@ export class TopicsComponent implements OnInit {
       this.getAllTopics();
       this.table.renderRows();
     });
+  }
+
+  markAsCompleted(): void {
+    this.topicService.update
   }
 
 }
