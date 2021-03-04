@@ -26,7 +26,7 @@ import { CookieService } from 'ngx-cookie-service';
     TopicsComponent,
     UpdateTopicComponent,
     LoginComponent,
-    RegisterComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

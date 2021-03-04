@@ -18,7 +18,6 @@ export class TopicsComponent implements OnInit {
   @Input() color: ThemePalette;
   topics: Topic[];
   displayedColumns = ['title', 'days for learning', 'progress', 'started on', 'update', 'delete'];
-  isLoggedIn: boolean;
   errorMsg: string;
 
   @ViewChild(MatTable) table: MatTable<Topic>;
@@ -33,7 +32,7 @@ export class TopicsComponent implements OnInit {
     this.getAllTopics();
   }
 
-  getAllTopics() {
+  private getAllTopics() {
     this.topicService.getAllTopics()
       .subscribe(topics => this.topics = topics);
   }
@@ -72,6 +71,10 @@ export class TopicsComponent implements OnInit {
       this.getAllTopics();
       this.table.renderRows();
     });
+  }
+
+  goToUpdate(topicId: number): void {
+    this.router.navigateByUrl(`/topics/${topicId}`);
   }
 
   markAsCompleted(): void {

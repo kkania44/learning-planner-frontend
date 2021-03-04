@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthHolderService } from './auth/auth-holder.service';
 import { TokenStorageService } from './auth/token-storage.service';
 
 @Component({
@@ -9,22 +10,21 @@ import { TokenStorageService } from './auth/token-storage.service';
 })
 export class AppComponent implements OnInit, OnDestroy{
   title = 'Planner for your exam learing path';
-  isLoggedIn = false;
+  isLoggedIn: boolean;
 
   constructor(
     private tokenStorage: TokenStorageService,
-    private router: Router
+    private authHolder: AuthHolderService
     ) {}
 
   ngOnInit(): void {
-    this.isLoggedIn = this.tokenStorage.getToken() ? true : false;
+    this.authHolder.isAuthenticatedObs().subscribe(flag => this.isLoggedIn = flag);
   }
 
   logout() {
-    this.router.navigateByUrl('/auth/login');
-    this.isLoggedIn = false;
     window.location.reload();
     this.tokenStorage.clear();
+    this.authHolder.logout();
   }
 
   ngOnDestroy(): void {

@@ -19,7 +19,6 @@ export class SubtopicsComponent implements OnInit {
   subtopics: Subtopic[];
   
   errorMessage: string;
-  isLoggedIn: boolean;
   topicTitle: string;
 
   @ViewChild(MatTable) table: MatTable<Subtopic>; 
@@ -58,8 +57,6 @@ export class SubtopicsComponent implements OnInit {
     this.subtopicService.delete(id)
     .subscribe(() => {
       this.getSubtopicsForTopic(this.getIdFromUrl());
-      // window.location.reload();
-      // this.table.renderRows()
     });
   }
 

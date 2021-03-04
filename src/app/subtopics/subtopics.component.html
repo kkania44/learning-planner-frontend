@@ -32,20 +32,6 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
-<!-- <div class="subtopics">
-    <mat-list>
-        <mat-list-item *ngFor="let subtopic of subtopics">
-            {{ subtopic.title }}
-            <div class="completion">
-                <button mat-flat-button color="accent" *ngIf="!subtopic.completed" (click)="complete(subtopic)">
-                    Complete
-                </button>
-                <span *ngIf="subtopic.completed" style="color: green;">(completed)</span>
-            </div>
-        </mat-list-item>
-    </mat-list>
-</div> -->
-
 <h3>Add new subtopic</h3>
 
 <div class="add-subtopic">

@@ -16,7 +16,8 @@ export class UpdateTopicComponent implements OnInit {
 
   constructor(
     private topicService: TopicService,
-    private route: ActivatedRoute) 
+    private route: ActivatedRoute,
+    private router: Router) 
     { }
 
   ngOnInit(): void {
@@ -34,6 +35,10 @@ export class UpdateTopicComponent implements OnInit {
       id = +params['id']
     });
     return id;
+  }
+
+  goToTopics(): void {
+    this.router.navigateByUrl('/topics');
   }
 
   getTopicById(topicId: number) {
