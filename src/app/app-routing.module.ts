@@ -6,12 +6,19 @@ import { TopicsComponent } from './topics/topics.component';
 import { UpdateTopicComponent } from './update-topic/update-topic.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
+import { CanActivateGuardService } from './auth/can-activate-guard.service';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/auth/login',  pathMatch: 'full'},
-  { path: 'subtopics/topic/:id', component: SubtopicsComponent},
-  { path: 'topics', component: TopicsComponent },
-  { path: 'topics/:id', component: UpdateTopicComponent },
+  { path: '', redirectTo: '/topics',  pathMatch: 'full'},
+  { path: 'subtopics/topic/:id', component: SubtopicsComponent
+  , canActivate: [CanActivateGuardService]
+},
+  { path: 'topics', component: TopicsComponent
+  , canActivate: [CanActivateGuardService] 
+},
+  { path: 'topics/:id', component: UpdateTopicComponent
+  , canActivate: [CanActivateGuardService] 
+},
   { path: 'auth/signup', component: RegisterComponent },
   { path: 'auth/login', component: LoginComponent }
 ]
