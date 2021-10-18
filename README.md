@@ -1,4 +1,5 @@
-Front-end for Learning planner application build with Angular 10 using Material library.
+# Learning planner app - frontend
+Angular (v.10) front-end for learning planner web application. UI built with Material library.
 <br>
 Contains following views: 
  - sign up and login forms,
